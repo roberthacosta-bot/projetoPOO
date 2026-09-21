@@ -10,8 +10,8 @@ class Personagem {
 
     this.img = img;
 
-    /*this.img.resize(this.larguraImg, 0);
-    this.altura = img.height;*/
+    this.img.resize(this.larguraImg, 0);
+    this.altura = img.height;
   }
 
   mover() {

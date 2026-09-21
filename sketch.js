@@ -133,7 +133,7 @@ function desenharJogo() {
       personagem.pisarNoChao(plataforma);
     } else if (personagem.checarColisao(plataforma) == 2) {
       personagem.baterCabeca(plataforma);
-      plataforma.setCor("#FF0000");
+      plataforma.setCor("#0a6b1a");
     }
   }
 
