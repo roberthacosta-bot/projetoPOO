@@ -7,6 +7,7 @@ class Personagem {
     this.vy = 0;
     this.largura = largura - 70;
     this.larguraImg = largura;
+    this.olhandoDireita = true;
 
     this.img = img;
 
@@ -14,12 +15,20 @@ class Personagem {
     this.altura = img.height;
   }
 
-  mover() {
+  olharParaDireita() {
+    this.olhandoDireita = true;
+  }
+
+  olharParaEsquerda() {
+    this.olhandoDireita = false;
+  }
+
+  parar() {}
+
+  aplicarGravidade() {
     const GRAVIDADE = 0.7;
 
-    this.x = this.x + this.vx;
     this.y = this.y + this.vy;
-
     this.vy = this.vy + GRAVIDADE;
   }
 
@@ -32,27 +41,27 @@ class Personagem {
     this.y = plataforma.y + plataforma.altura;
     this.vy = 0;
   }
-  andarDireita() {
-    this.vx = 5;
-  }
-
-  andarEsquerda() {
-    this.vx = -5;
-  }
-
-  parar() {
-    this.vx = 0;
-  }
 
   pular() {
     this.vy = -20;
   }
 
   desenhar() {
-    image(this.img, this.xImg, this.y);
-   /* stroke("red");
-    noFill();
-    rect(this.x, this.y, this.largura, this.altura);*/
+    if (this.olhandoDireita) {
+      image(this.img, this.xImg, this.y);
+    } else {
+      push();
+
+      translate(this.xImg + this.larguraImg, this.y);
+      scale(-1, 1);
+      image(this.img, 0, 0);
+
+      pop();
+    }
+
+    // stroke("red");
+    // noFill();
+    // rect(this.x, this.y, this.largura, this.altura);
   }
 
   checarColisao(outro) {
