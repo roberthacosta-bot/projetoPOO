@@ -160,3 +160,7 @@ function keyPressed() {
     personagem.pular();
   }
 }
+
+
+
+
