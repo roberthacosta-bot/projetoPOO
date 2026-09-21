@@ -20,7 +20,7 @@ async function setup() {
 
 
   font = await loadFont("Honk-Regular-VariableFont_MORF,SHLN.ttf");
- /* img = await loadImage("hellokitty.png");*/
+  img = await loadImage("flora.png");
   imgMoeda = await loadImage("coracao.png");
   imgCenario = await loadImage("image.png");
   imgCenario.resize(3000, 700);
