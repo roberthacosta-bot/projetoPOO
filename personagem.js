@@ -68,42 +68,40 @@ class Personagem {
     let resultado = 0;
 
     let colide =
-      this.y + this.altura > outro.y &&
-      this.y < outro.y + outro.altura &&
-      this.x < outro.x + outro.largura &&
-      this.x + this.largura > outro.x;
+        this.y + this.altura > outro.y &&
+        this.y < outro.y + outro.altura &&
+        this.x < outro.x + outro.largura &&
+        this.x + this.largura > outro.x;
 
     if (colide) {
-      let overlapLeft = this.x + this.largura - outro.x;
-      let overlapRight = outro.x + outro.largura - this.x;
-      let overlapTop = this.y + this.altura - outro.y;
-      let overlapBottom = outro.y + outro.altura - this.y;
+        let overlapLeft = this.x + this.largura - outro.x;
+        let overlapRight = outro.x + outro.largura - this.x;
+        let overlapBottom = outro.y + outro.altura - this.y;
+        let overlapTop = this.y + this.altura - outro.y;
 
-      let minOverlap = Math.min(
-        overlapBottom,
-        overlapLeft,
-        overlapRight,
-        overlapTop,
-      );
+        let minOverlap = Math.min(
+            overlapBottom,
+            overlapLeft,
+            overlapRight,
+            overlapTop
+        );
 
-      if (minOverlap === overlapTop && this.vy > 0) {
-        // colide por cima
-        resultado = 1;
-      } else if (minOverlap === overlapBottom && this.vy < 0) {
-        // colide por baixo
-        resultado = 2;
-      } else {
-        resultado = 5;
-      }
+        if (minOverlap === overlapTop && this.vy > 0) {
+            // colide por cima
+            resultado = 1;
 
-      // Não funciona se o personagem não se move lateralmente
-      // } else if (minOverlap === overlapLeft && this.vx > 0) {
-      //   // colide pela esquerda
-      //   resultado = 3;
-      // } else if (minOverlap === overlapRight && this.vx < 0) {
-      //   // colide pela direita
-      //   resultado = 4;
-      // }
+        } else if (minOverlap === overlapBottom && this.vy < 0) {
+            // colide por baixo
+            resultado = 2;
+
+        } else if (minOverlap === overlapLeft && this.vx > 0) {
+            // colide pela esquerda
+            resultado = 3;
+
+        } else if (minOverlap === overlapRight && this.vx < 0) {
+            // colide pela direita
+            resultado = 4;
+        }
     }
 
     return resultado;
