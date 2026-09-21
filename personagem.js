@@ -10,8 +10,8 @@ class Personagem {
 
     this.img = img;
 
-    this.img.resize(this.larguraImg, 0);
-    this.altura = img.height;
+    /*this.img.resize(this.larguraImg, 0);
+    this.altura = img.height;*/
   }
 
   mover() {
@@ -50,9 +50,9 @@ class Personagem {
 
   desenhar() {
     image(this.img, this.xImg, this.y);
-    stroke("red");
+   /* stroke("red");
     noFill();
-    rect(this.x, this.y, this.largura, this.altura);
+    rect(this.x, this.y, this.largura, this.altura);*/
   }
 
   checarColisao(outro) {
