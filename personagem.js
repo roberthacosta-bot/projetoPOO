@@ -1,3 +1,5 @@
+oiiiiiiiiiiii
+
 class Personagem {
   constructor(x, y, largura, altura, img) {
     this.x = x + 30;
