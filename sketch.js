@@ -1,5 +1,5 @@
-// http://10.12.130.53:5501/plataforma-aula/assets.zip
 
+let img;
 let imgCenario;
 let x, y;
 let vx, vy;
@@ -9,22 +9,31 @@ let personagem;
 let plataformas = [];
 let imgPlataformas;
 let imgPersonagem;
+let font;
 let executando = true;
 let itens = [];
-let imgMoeda;
+let imgCoracao;
 let pontos = 0;
 let mapeamento;
-let mapeamentoMonstros;
-
+let cenarioX = 0;
+let velocidade = 5;
+let alturaCenario;
+let larguraCenario = 2146;
+let centroTela = 400;
 let animacoes;
 
 async function setup() {
   createCanvas(800, 600);
 
-  imgMoeda = await loadImage("assets/moeda.png");
+  font = await loadFont("assets/Silkscreen-Regular.ttf");
+  img = await loadImage("assets/flora.png");
+  imgCoracao = await loadImage("assets/coracao.png");
   imgCenario = await loadImage("assets/cenario2.png");
-  mapeamentoMonstros = await loadJSON("assets/monsters.json");
-  imgCenario.resize(800, 600);
+
+  alturaCenario = height;
+  larguraCenario =
+    imgCenario.width * (alturaCenario / imgCenario.height);
+
   x = width / 2;
   y = 10;
   vx = 0;
@@ -35,62 +44,70 @@ async function setup() {
   mapeamento = {
     run: {
       frames: [
-        { x: 38, y: 60 },
-        { x: 166, y: 60 },
-        { x: 294, y: 60 },
-        { x: 422, y: 60 },
-        { x: 550, y: 60 },
-        { x: 678, y: 60 },
-        { x: 806, y: 60 },
-        { x: 934, y: 60 },
+        { x: 0, y: 0 },
+        { x: 216, y: 0 },
+        { x: 432, y: 0 },
+        { x: 648, y: 0 },
+        { x: 864, y: 0 },
+        { x: 1080, y: 0 },
+        { x: 1296, y: 0 },
+        { x: 1512, y: 0 },
       ],
-      frameWidth: 46,
-      frameHeight: 68,
+      frameWidth: 216,
+      frameHeight: 242,
     },
+
     jump: {
       frames: [
-        { x: 36, y: 43 },
-        { x: 163, y: 43 },
-        { x: 291, y: 43 },
-        { x: 417, y: 43 },
-        { x: 545, y: 43 },
-        { x: 673, y: 43 },
-        { x: 803, y: 43 },
-        { x: 931, y: 43 },
+        { x: 0, y: 0 },
+        { x: 144, y: 0 },
+        { x: 288, y: 0 },
+        { x: 432, y: 0 },
+        { x: 576, y: 0 },
+        { x: 720, y: 0 },
+        { x: 864, y: 0 },
+        { x: 1008, y: 0 },
+        { x: 1152, y: 0 },
+        { x: 1296, y: 0 },
+        { x: 1440, y: 0 },
+        { x: 1584, y: 0 },
       ],
-      frameWidth: 59,
-      frameHeight: 85,
+      frameWidth: 144,
+      frameHeight: 254,
     },
+
     idle: {
       frames: [
-        { x: 38, y: 58 },
-        { x: 166, y: 58 },
-        { x: 294, y: 58 },
-        { x: 422, y: 58 },
-        { x: 550, y: 58 },
+        { x: 0, y: 100 },
+        { x: 342, y: 100 },
+        { x: 684, y: 100 },
+        { x: 1026, y: 100 },
+        { x: 1367, y: 100 },
       ],
-      frameWidth: 59,
-      frameHeight: 70,
+      frameWidth: 342,
+      frameHeight: 370,
     },
   };
 
   imgPersonagem = {
-    run: await loadImage("assets/Run.png"),
-    jump: await loadImage("assets/Jump.png"),
-    idle: await loadImage("assets/Idle.png"),
-    slime: await loadImage("assets/slime.png"),
-    ghost: await loadImage("assets/ghost.png"),
+    run: await loadImage("assets/run.png"),
+    jump: await loadImage("assets/jump.png"),
+    idle: await loadImage("assets/idle.png"),
   };
 
   animacoes = {
     run: new Animacao(mapeamento.run, imgPersonagem.run),
     jump: new Animacao(mapeamento.jump, imgPersonagem.jump),
     idle: new Animacao(mapeamento.idle, imgPersonagem.idle),
-    slime: new Animacao(mapeamentoMonstros.slime, imgPersonagem.slime),
-    ghost: new Animacao(mapeamentoMonstros.ghost, imgPersonagem.ghost),
   };
 
-  personagem = new Personagem(x, y, 46 * 2, 68 * 2, animacoes);
+  personagem = new Personagem(
+    x,
+    y,
+    46 * 2,
+    68 * 2,
+    animacoes
+  );
 
   imgPlataformas = {
     madeira: await loadImage("assets/plataforma-madeira.png"),
@@ -99,26 +116,32 @@ async function setup() {
   };
 
   plataformas.push(
-    new Plataforma(0, height - 70, 40, 40, 15, imgPlataformas.terra),
-  );
-  plataformas.push(
-    new Plataforma(500, height - 210, 40, 40, 5, imgPlataformas.pedra),
-  );
-  plataformas.push(
-    new Plataforma(360, height - 340, 40, 40, 5, imgPlataformas.pedra),
-  );
-  plataformas.push(
-    new Plataforma(width + 130, height - 70, 40, 40, 5, imgPlataformas.terra),
+    new Plataforma(
+      0,
+      height - 40,
+      40,
+      40,
+      54,
+      imgPlataformas.terra
+    )
   );
 
-  itens.push(new Item(width + 45, height - 250, 40, 40, imgMoeda));
-  itens.push(new Item(100, height - 140, 40, 40, imgMoeda));
-  itens.push(new Item(150, height - 140, 40, 40, imgMoeda));
-  itens.push(new Item(200, height - 140, 40, 40, imgMoeda));
-}
+  itens.push(
+    new Item(width + 45, height - 250, 40, 40, imgCoracao)
+  );
+  itens.push(
+    new Item(100, height - 140, 40, 40, imgCoracao)
+  );
+  itens.push(
+    new Item(150, height - 140, 40, 40, imgCoracao)
+  );
+  itens.push(
+    new Item(200, height - 140, 40, 40, imgCoracao)
+  );
+} // Fecha a função setup corretamente.
 
 function draw() {
-  if (executando == true) {
+  if (executando === true) {
     desenharJogo();
   } else {
     desenharGameOver();
@@ -128,8 +151,10 @@ function draw() {
 function desenharGameOver() {
   imgCenario.filter(GRAY);
   image(imgCenario, 0, 0);
+
   fill("red");
   textSize(90);
+  textFont(font);
   textAlign(CENTER, CENTER);
   text("Game Over", width / 2, height / 2);
 }
@@ -138,7 +163,8 @@ function desenharPontuacao() {
   fill("#ffffff83");
   noStroke();
   rect(40, 40, 150, 60);
-  image(imgMoeda, 50, 50);
+  image(imgCoracao, 50, 50);
+
   fill("black");
   textSize(30);
   text("x " + pontos, 95, 80);
@@ -146,41 +172,70 @@ function desenharPontuacao() {
 
 function desenharJogo() {
   background(220);
-  image(imgCenario, 0, 0);
-  desenharPontuacao();
-
-  // animacoes.ghost.avancarFrame();
-  // animacoes.ghost.desenharAmpliado(10, 10, 3);
 
   if (keyIsDown(LEFT_ARROW)) {
     personagem.olharParaEsquerda();
     personagem.correr();
-    // Move todas as plataformas para a direita
-    for (let i = 0; i < plataformas.length; i++) {
-      plataformas[i].moverDireita();
+
+    if (personagem.x > 0 && personagem.x <= centroTela) {
+      personagem.x -= velocidade;
+    } else if (cenarioX < 0 && personagem.x <= centroTela) {
+      cenarioX += velocidade;
+
+      if (cenarioX > 0) {
+        cenarioX = 0;
+      }
+
+      for (let p of plataformas) {
+        p.moverDireita();
+      }
+
+      for (let item of itens) {
+        item.moverDireita();
+      }
+    } else if (personagem.x > 0) {
+      personagem.x -= velocidade;
     }
 
-    // Move todos os itens para a direita
-    for (let i = 0; i < itens.length; i++) {
-      itens[i].moverDireita();
-    }
   } else if (keyIsDown(RIGHT_ARROW)) {
     personagem.olharParaDireita();
     personagem.correr();
-    // Move todas as plataformas para a esquerda
-    for (let i = 0; i < plataformas.length; i++) {
-      plataformas[i].moverEsquerda();
+
+    if (personagem.x < centroTela && cenarioX === 0) {
+      personagem.x += velocidade;
+    } else if (cenarioX > width - larguraCenario) {
+      cenarioX -= velocidade;
+
+      if (cenarioX < width - larguraCenario) {
+        cenarioX = width - larguraCenario;
+      }
+
+      for (let p of plataformas) {
+        p.moverEsquerda();
+      }
+
+      for (let item of itens) {
+        item.moverEsquerda();
+      }
+    } else {
+      personagem.x += velocidade;
     }
 
-    // Move todos os itens para a esquerda
-    for (let i = 0; i < itens.length; i++) {
-      itens[i].moverEsquerda();
-    }
   } else {
     personagem.parar();
   }
 
-  // todas as atualizações
+  if (cenarioX > 0) {
+    cenarioX = 0;
+  }
+
+  if (cenarioX < width - larguraCenario) {
+    cenarioX = width - larguraCenario;
+  }
+
+  image(imgCenario, cenarioX, 0, larguraCenario, height);
+
+  desenharPontuacao();
   personagem.aplicarGravidade();
 
   if (personagem.y > height) {
@@ -191,34 +246,25 @@ function desenharJogo() {
     if (personagem.checarColisao(itens[i])) {
       itens.splice(i, 1);
       pontos++;
+      i--;
     }
   }
 
   for (let plataforma of plataformas) {
-    if (personagem.checarColisao(plataforma) == 1) {
+    if (personagem.checarColisao(plataforma) === 1) {
       personagem.pisarNoChao(plataforma);
-    } else if (personagem.checarColisao(plataforma) == 2) {
+    } else if (personagem.checarColisao(plataforma) === 2) {
       personagem.baterCabeca(plataforma);
-      plataforma.setCor("#FF0000");
     }
   }
 
-  // todos os dsenhos
   personagem.desenhar();
 
-  // Desenha todas as plataformas
-  for (let plataforma of plataformas) {
-    plataforma.desenhar();
+  for (let p of plataformas) {
+    p.desenhar();
   }
 
-  // Desenha todos os itens
   for (let item of itens) {
     item.desenhar();
-  }
-}
-
-function keyPressed() {
-  if (keyCode == 38) {
-    personagem.pular();
   }
 }

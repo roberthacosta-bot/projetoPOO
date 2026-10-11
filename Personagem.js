@@ -1,3 +1,4 @@
+
 class Personagem {
   constructor(x, y, largura, altura, animacoes) {
     this.x = x;
@@ -6,10 +7,8 @@ class Personagem {
     this.vy = 0;
     this.largura = largura;
     this.altura = altura;
-
     this.noChao = false;
     this.olhandoDireita = true;
-
     this.animacoes = animacoes;
     this.animacao = this.animacoes.run;
   }
@@ -23,7 +22,10 @@ class Personagem {
   }
 
   correr() {
-    this.animacao = this.animacoes.run;
+    if (this.animacao !== this.animacoes.run) {
+      this.animacao = this.animacoes.run;
+      this.animacao.frameAtual = 0;
+    }
   }
 
   parar() {
@@ -38,7 +40,6 @@ class Personagem {
     this.animacao.avancarFrame();
 
     const GRAVIDADE = 0.7;
-
     this.y = this.y + this.vy;
     this.vy = this.vy + GRAVIDADE;
   }
@@ -67,24 +68,8 @@ class Personagem {
       this.x,
       this.y,
       this.largura,
-      this.altura,
-      this.olhandoDireita,
+      this.altura
     );
-
-    // if (this.olhandoDireita) {
-    // } else {
-    //   push();
-
-    //   translate(this.xImg + this.larguraImg, this.y);
-    //   scale(-1, 1);
-    //   image(this.img, 0, 0);
-
-    //   pop();
-    // }
-
-    // stroke("red");
-    // noFill();
-    // rect(this.x, this.y, this.largura, this.altura);
   }
 
   checarColisao(outro) {
@@ -106,27 +91,16 @@ class Personagem {
         overlapBottom,
         overlapLeft,
         overlapRight,
-        overlapTop,
+        overlapTop
       );
 
       if (minOverlap === overlapTop && this.vy > 0) {
-        // colide por cima
         resultado = 1;
       } else if (minOverlap === overlapBottom && this.vy < 0) {
-        // colide por baixo
         resultado = 2;
       } else {
         resultado = 5;
       }
-
-      // Não funciona se o personagem não se move lateralmente
-      // } else if (minOverlap === overlapLeft && this.vx > 0) {
-      //   // colide pela esquerda
-      //   resultado = 3;
-      // } else if (minOverlap === overlapRight && this.vx < 0) {
-      //   // colide pela direita
-      //   resultado = 4;
-      // }
     }
 
     return resultado;
