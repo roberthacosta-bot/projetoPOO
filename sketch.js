@@ -32,7 +32,7 @@ async function setup() {
 
   alturaCenario = height;
   larguraCenario =
-    imgCenario.width * (alturaCenario / imgCenario.height);
+  imgCenario.width * (alturaCenario / imgCenario.height);
 
   x = width / 2;
   y = 10;
@@ -41,53 +41,58 @@ async function setup() {
   g = 0.8;
   largura = 100;
 
-  mapeamento = {
-    run: {
-      frames: [
-        { x: 0, y: 0 },
-        { x: 216, y: 0 },
-        { x: 432, y: 0 },
-        { x: 648, y: 0 },
-        { x: 864, y: 0 },
-        { x: 1080, y: 0 },
-        { x: 1296, y: 0 },
-        { x: 1512, y: 0 },
-      ],
-      frameWidth: 216,
-      frameHeight: 242,
-    },
+ 
+mapeamento = {
 
-    jump: {
-      frames: [
-        { x: 0, y: 0 },
-        { x: 144, y: 0 },
-        { x: 288, y: 0 },
-        { x: 432, y: 0 },
-        { x: 576, y: 0 },
-        { x: 720, y: 0 },
-        { x: 864, y: 0 },
-        { x: 1008, y: 0 },
-        { x: 1152, y: 0 },
-        { x: 1296, y: 0 },
-        { x: 1440, y: 0 },
-        { x: 1584, y: 0 },
-      ],
-      frameWidth: 144,
-      frameHeight: 254,
-    },
+run: {
+  escala: 1.45,
+  frames: [
+    { x: 0, y: 0 },
+    { x: 109, y: 0 },
+    { x: 218, y: 0 },
+    { x: 326, y: 0 },
+    { x: 435, y: 0 },
+    { x: 544, y: 0 },
+    { x: 652, y: 0 },
+    { x: 761, y: 0 },
+  ],
+  frameWidth: 109,
+  frameHeight: 122,
+},
 
-    idle: {
-      frames: [
-        { x: 0, y: 100 },
-        { x: 342, y: 100 },
-        { x: 684, y: 100 },
-        { x: 1026, y: 100 },
-        { x: 1367, y: 100 },
-      ],
-      frameWidth: 342,
-      frameHeight: 370,
-    },
-  };
+  jump: {
+    escala: 1.8,
+    frames: [
+      { x: 0, y: 0 },
+      { x: 97.75, y: 0 },
+      { x: 195.5, y: 0 },
+      { x: 293.25, y: 0 },
+      { x: 391, y: 0 },
+      { x: 488.75, y: 0 },
+      { x: 586.5, y: 0 },
+      { x: 684.25, y: 0 },
+      { x: 782, y: 0 },
+      { x: 879.75, y: 0 },
+      { x: 977.5, y: 0 },
+      { x: 1075.25, y: 0 },
+    ],
+    frameWidth: 97.75,
+    frameHeight: 173,
+  },
+
+  idle: {
+    escala: 1,
+    frames: [
+      { x: 0, y: 0 },
+      { x: 200.2, y: 0 },
+      { x: 400.4, y: 0 },
+      { x: 600.6, y: 0 },
+      { x: 800.8, y: 0 },
+    ],
+    frameWidth: 200.2,
+    frameHeight: 249,
+  },
+};
 
   imgPersonagem = {
     run: await loadImage("assets/run.png"),
@@ -268,3 +273,10 @@ function desenharJogo() {
     item.desenhar();
   }
 }
+
+function keyPressed() {
+  if (keyCode === UP_ARROW || key === " ") {
+    personagem.pular();
+  }
+}
+

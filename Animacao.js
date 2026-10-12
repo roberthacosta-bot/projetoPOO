@@ -5,12 +5,16 @@ class Animacao {
     this.sprites = sprites;
     this.frameAtual = 0;
     this.ultimoTempo = 0;
+    this.congelada = false;
   }
 
   avancarFrame() {
+    // Não troca de quadro quando a animação está congelada.
+    if (this.congelada) return;
+
     let atual = millis();
 
-    if (atual - this.ultimoTempo > 100) {
+    if (atual - this.ultimoTempo >= 80) {
       this.frameAtual =
         (this.frameAtual + 1) % this.mapeamento.frames.length;
 
@@ -20,13 +24,21 @@ class Animacao {
 
   desenhar(x, y, largura, altura) {
     let quadro = this.mapeamento.frames[this.frameAtual];
+    let escala = this.mapeamento.escala || 1;
+
+    let larguraDesenho = largura * escala;
+    let alturaDesenho = altura * escala;
+
+    let xDesenho = x - (larguraDesenho - largura) / 2;
+    let yDesenho = y + altura - alturaDesenho;
+    yDesenho += 5;
 
     image(
       this.sprites,
-      x,
-      y,
-      largura,
-      altura,
+      xDesenho,
+      yDesenho,
+      larguraDesenho,
+      alturaDesenho,
       quadro.x,
       quadro.y,
       this.mapeamento.frameWidth,

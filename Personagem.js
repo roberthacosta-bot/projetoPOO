@@ -21,20 +21,33 @@ class Personagem {
     this.olhandoDireita = false;
   }
 
-  correr() {
-    if (this.animacao !== this.animacoes.run) {
-      this.animacao = this.animacoes.run;
-      this.animacao.frameAtual = 0;
-    }
-  }
+correr() {
+  this.animacoes.idle.congelada = false;
+  this.animacoes.run.congelada = false;
+  this.animacoes.jump.congelada = false;
 
-  parar() {
-    if (this.noChao) {
-      this.animacao = this.animacoes.idle;
-    } else {
-      this.animacao = this.animacoes.jump;
-    }
+  if (this.animacao !== this.animacoes.run) {
+    this.animacao = this.animacoes.run;
+    this.animacao.frameAtual = 0;
+    this.animacao.ultimoTempo = millis();
   }
+}
+
+parar() {
+  if (this.noChao) {
+    if (this.animacao !== this.animacoes.idle) {
+      this.animacao = this.animacoes.idle;
+      this.animacao.frameAtual = 0;
+      this.animacao.ultimoTempo = millis();
+    }
+
+    this.animacoes.idle.congelada = true;
+  } else {
+    this.animacao = this.animacoes.jump;
+    this.animacoes.jump.congelada = false;
+  }
+}
+
 
   aplicarGravidade() {
     this.animacao.avancarFrame();
@@ -44,11 +57,11 @@ class Personagem {
     this.vy = this.vy + GRAVIDADE;
   }
 
-  pisarNoChao(plataforma) {
-    this.y = plataforma.y - this.altura;
-    this.vy = 0;
-    this.noChao = true;
-  }
+ pisarNoChao(plataforma) {
+  this.y = plataforma.y - this.altura;
+  this.vy = 0;
+  this.noChao = true;
+}
 
   baterCabeca(plataforma) {
     this.y = plataforma.y + plataforma.altura;
