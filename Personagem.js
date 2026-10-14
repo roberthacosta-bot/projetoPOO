@@ -21,10 +21,14 @@ class Personagem {
     this.olhandoDireita = false;
   }
 
+
 correr() {
-  this.animacoes.idle.congelada = false;
+  if (!this.noChao) {
+    this.animacao = this.animacoes.jump;
+    return;
+  }
+
   this.animacoes.run.congelada = false;
-  this.animacoes.jump.congelada = false;
 
   if (this.animacao !== this.animacoes.run) {
     this.animacao = this.animacoes.run;
@@ -33,19 +37,20 @@ correr() {
   }
 }
 
-parar() {
-  if (this.noChao) {
-    if (this.animacao !== this.animacoes.idle) {
-      this.animacao = this.animacoes.idle;
-      this.animacao.frameAtual = 0;
-      this.animacao.ultimoTempo = millis();
-    }
 
-    this.animacoes.idle.congelada = true;
-  } else {
+parar() {
+  if (!this.noChao) {
     this.animacao = this.animacoes.jump;
-    this.animacoes.jump.congelada = false;
+    return;
   }
+
+  if (this.animacao !== this.animacoes.idle) {
+    this.animacao = this.animacoes.idle;
+    this.animacao.frameAtual = 0;
+    this.animacao.ultimoTempo = millis();
+  }
+
+  this.animacoes.idle.congelada = true;
 }
 
 

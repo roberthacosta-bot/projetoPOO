@@ -60,25 +60,19 @@ run: {
   frameHeight: 122,
 },
 
-  jump: {
-    escala: 1.8,
-    frames: [
-      { x: 0, y: 0 },
-      { x: 97.75, y: 0 },
-      { x: 195.5, y: 0 },
-      { x: 293.25, y: 0 },
-      { x: 391, y: 0 },
-      { x: 488.75, y: 0 },
-      { x: 586.5, y: 0 },
-      { x: 684.25, y: 0 },
-      { x: 782, y: 0 },
-      { x: 879.75, y: 0 },
-      { x: 977.5, y: 0 },
-      { x: 1075.25, y: 0 },
-    ],
-    frameWidth: 97.75,
-    frameHeight: 173,
-  },
+jump: {
+  escala: 1.45,
+  frames: [
+    { x: 0,    y: 0 }, // 1. Preparação
+    { x: 362,  y: 0 }, // 2. Impulso
+    { x: 724,  y: 0 }, // 3. Subida
+    { x: 1086, y: 0 }, // 4. Ápice
+    { x: 1448, y: 0 }, // 5. Descida
+    { x: 1810, y: 0 }  // 6. Aterrissagem
+  ],
+  frameWidth: 362,
+  frameHeight: 724,
+},
 
   idle: {
     escala: 1,
