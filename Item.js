@@ -7,7 +7,7 @@ class Item {
     this.img = img;
 
     // Redimensiona usando a largura como base,
-    // mantendo as proporções
+    // mantendo as proporcoes
     this.img.resize(this.largura, 0);
     // Reajusta a altura para ficar proporcional
     this.altura = img.height;

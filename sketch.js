@@ -1,4 +1,3 @@
-
 let img;
 let imgCenario;
 let x, y;
@@ -21,6 +20,8 @@ let alturaCenario;
 let larguraCenario = 2146;
 let centroTela = 400;
 let animacoes;
+let imgPorta, porta;
+let faseAtual = 1;
 
 async function setup() {
   createCanvas(800, 600);
@@ -28,20 +29,25 @@ async function setup() {
   font = await loadFont("assets/Silkscreen-Regular.ttf");
   img = await loadImage("assets/flora.png");
   imgCoracao = await loadImage("assets/coracao.png");
-  imgCenario = await loadImage("assets/cenario2.png");
+  imgPorta = await loadImage("assets/porta.png");
+
+  imgCenario = {
+    fase1: await loadImage("assets/fase1.png"),
+    fase2: await loadImage("assets/fase2.png"),
+    fase3: await loadImage("assets/fase3.png"),
+    fase4: await loadImage("assets/fase4.png"),
+    fase5: await loadImage("assets/fase5.png"),
+  };
 
   alturaCenario = height;
-  larguraCenario =
-  imgCenario.width * (alturaCenario / imgCenario.height);
-
-  x = width / 2;
-  y = 10;
+  larguraCenario = imgCenario.fase1.width * (alturaCenario / imgCenario.fase1.height);
+  x = 620;
+  y = height - 40 - (68 * 2);
   vx = 0;
   vy = 0;
   g = 0.8;
   largura = 100;
 
- 
 mapeamento = {
 
 run: {
@@ -100,30 +106,16 @@ jump: {
     idle: new Animacao(mapeamento.idle, imgPersonagem.idle),
   };
 
-  personagem = new Personagem(
-    x,
-    y,
-    46 * 2,
-    68 * 2,
-    animacoes
-  );
+  personagem = new Personagem(x, y, 46 * 2, 68 * 2, animacoes);
 
+  porta = new Porta(650, height - 40 - 170, 140, 170, imgPorta);
   imgPlataformas = {
     madeira: await loadImage("assets/plataforma-madeira.png"),
     pedra: await loadImage("assets/plataforma-pedra.png"),
     terra: await loadImage("assets/plataforma-terra.png"),
   };
 
-  plataformas.push(
-    new Plataforma(
-      0,
-      height - 40,
-      40,
-      40,
-      54,
-      imgPlataformas.terra
-    )
-  );
+  plataformas.push(new Plataforma(0, height - 40, 40, 40, 54, imgPlataformas.terra));
 
   itens.push(
     new Item(width + 45, height - 250, 40, 40, imgCoracao)
@@ -142,14 +134,16 @@ jump: {
 function draw() {
   if (executando === true) {
     desenharJogo();
+
+    porta.atualizar(personagem);
+    porta.desenhar();
+
   } else {
     desenharGameOver();
   }
 }
-
 function desenharGameOver() {
-  imgCenario.filter(GRAY);
-  image(imgCenario, 0, 0);
+  image(imgCenario["fase" + faseAtual], 0, 0, width, height);
 
   fill("red");
   textSize(90);
@@ -232,8 +226,7 @@ function desenharJogo() {
     cenarioX = width - larguraCenario;
   }
 
-  image(imgCenario, cenarioX, 0, larguraCenario, height);
-
+image(imgCenario["fase" + faseAtual], cenarioX, 0, larguraCenario, height);
   desenharPontuacao();
   personagem.aplicarGravidade();
 
