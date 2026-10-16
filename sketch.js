@@ -16,11 +16,11 @@ let pontos = 0;
 let mapeamento;
 let cenarioX = 0;
 let velocidade = 5;
-let alturaCenario;
-let larguraCenario = 2146;
+let alturaCenario, larguraCenario = 2146;
 let centroTela = 400;
 let animacoes;
 let imgPorta, porta;
+let portaX, portaY;
 let faseAtual = 1;
 
 async function setup() {
@@ -41,6 +41,8 @@ async function setup() {
 
   alturaCenario = height;
   larguraCenario = imgCenario.fase1.width * (alturaCenario / imgCenario.fase1.height);
+  portaX = larguraCenario - 140 - 20;
+  portaY = height - 40 - 170;
   x = 620;
   y = height - 40 - (68 * 2);
   vx = 0;
@@ -108,7 +110,9 @@ jump: {
 
   personagem = new Personagem(x, y, 46 * 2, 68 * 2, animacoes);
 
-  porta = new Porta(650, height - 40 - 170, 140, 170, imgPorta);
+ //portaY = height - 40 - 240;
+ porta = new Porta(portaX, portaY, 140, 170, imgPorta);
+
   imgPlataformas = {
     madeira: await loadImage("assets/plataforma-madeira.png"),
     pedra: await loadImage("assets/plataforma-pedra.png"),
@@ -135,13 +139,15 @@ function draw() {
   if (executando === true) {
     desenharJogo();
 
-    porta.atualizar(personagem);
-    porta.desenhar();
+  porta.atualizar(personagem);
+  porta.desenhar();
+  personagem.desenhar();
 
   } else {
     desenharGameOver();
   }
 }
+
 function desenharGameOver() {
   image(imgCenario["fase" + faseAtual], 0, 0, width, height);
 
@@ -186,6 +192,7 @@ function desenharJogo() {
       for (let item of itens) {
         item.moverDireita();
       }
+
     } else if (personagem.x > 0) {
       personagem.x -= velocidade;
     }
@@ -210,6 +217,7 @@ function desenharJogo() {
       for (let item of itens) {
         item.moverEsquerda();
       }
+
     } else {
       personagem.x += velocidade;
     }
@@ -250,15 +258,17 @@ image(imgCenario["fase" + faseAtual], cenarioX, 0, larguraCenario, height);
     }
   }
 
-  personagem.desenhar();
+for (let p of plataformas) {
+  p.desenhar();
+}
 
-  for (let p of plataformas) {
-    p.desenhar();
-  }
+for (let item of itens) {
+  item.desenhar();
+}
 
-  for (let item of itens) {
-    item.desenhar();
-  }
+porta.desenhar();
+
+personagem.desenhar();
 }
 
 function keyPressed() {

@@ -18,9 +18,8 @@ desenhar() {
   let larguraQuadro = this.imagem.width / 3;
   let alturaQuadro = this.imagem.height;
 
-  image(this.imagem, this.x, this.y, this.largura, this.altura, this.quadro * larguraQuadro, 0, larguraQuadro, alturaQuadro);
+  image(this.imagem, this.x + cenarioX, this.y, this.largura, this.altura, this.quadro * larguraQuadro, 0, larguraQuadro, alturaQuadro);
 }
-
 
   verificarColisao(personagem) {
     return (
