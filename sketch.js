@@ -1,3 +1,4 @@
+
 let img;
 let imgCenario;
 let x, y;
@@ -27,6 +28,7 @@ async function setup() {
   createCanvas(800, 600);
 
   font = await loadFont("assets/Silkscreen-Regular.ttf");
+
   img = await loadImage("assets/flora.png");
   imgCoracao = await loadImage("assets/coracao.png");
   imgPorta = await loadImage("assets/porta.png");
@@ -40,61 +42,63 @@ async function setup() {
   };
 
   alturaCenario = height;
-  larguraCenario = imgCenario.fase1.width * (alturaCenario / imgCenario.fase1.height);
-  portaX = larguraCenario - 140 - 20;
-  portaY = height - 40 - 170;
+
+  larguraCenario =
+    imgCenario.fase1.width *
+    (alturaCenario / imgCenario.fase1.height);
+
   x = 620;
   y = height - 40 - (68 * 2);
+
   vx = 0;
   vy = 0;
   g = 0.8;
   largura = 100;
 
-mapeamento = {
+  // Mapeamento do personagem
+  mapeamento = {
+    idle: {
+      frames: [
+        { x: 0, y: 22 },
+        { x: 216, y: 10 },
+        { x: 436, y: 16 },
+        { x: 655, y: 27 },
+        { x: 871, y: 28 },
+        { x: 1098, y: 30 },
+        { x: 1321, y: 35 },
+      ],
+      frameWidth: 216,
+      frameHeight: 214,
+    },
 
-idle: {
-  frames: [
-    { x: 0, y: 22 },
-    { x: 216, y: 10 },
-    { x: 436, y: 16 },
-    { x: 655, y: 27 },
-    { x: 871, y: 28 },
-    { x: 1098, y: 30 },
-    { x: 1321, y: 35 },
-  ],
-  frameWidth: 216,
-  frameHeight: 214,
-},
+    jump: {
+      frames: [
+        { x: 0, y: 62 },
+        { x: 222, y: 33 },
+        { x: 451, y: 0 },
+        { x: 672, y: 0 },
+        { x: 885, y: 33 },
+        { x: 1105, y: 56 },
+        { x: 1329, y: 61 },
+      ],
+      frameWidth: 192,
+      frameHeight: 183,
+    },
 
-jump: {
-  frames: [
-    { x: 0,    y: 62 }, 
-    { x: 222,  y: 33 }, 
-    { x: 451,  y: 0 }, 
-    { x: 672, y: 0 }, 
-    { x: 885, y: 33 }, 
-    { x: 1105, y: 56 }, 
-    { x: 1329, y: 61 }, 
-
-  ],
-  frameWidth: 192,
-  frameHeight: 183,
-},
-
-  run: {
-    frames: [
-      { x: 0, y: 29 },
-      { x: 216, y: 25 },
-      { x: 440, y: 26 },
-      { x: 661, y: 26 },
-      { x: 878, y: 27 },
-      { x: 1095, y: 26 }, 
-      { x: 1308, y: 25 }, 
-    ],
-    frameWidth: 192,
-    frameHeight: 186,
-  },
-};
+    run: {
+      frames: [
+        { x: 0, y: 29 },
+        { x: 216, y: 25 },
+        { x: 440, y: 26 },
+        { x: 661, y: 26 },
+        { x: 878, y: 27 },
+        { x: 1095, y: 26 },
+        { x: 1308, y: 25 },
+      ],
+      frameWidth: 192,
+      frameHeight: 186,
+    },
+  };
 
   imgPersonagem = {
     run: await loadImage("assets/run.png"),
@@ -108,48 +112,96 @@ jump: {
     idle: new Animacao(mapeamento.idle, imgPersonagem.idle),
   };
 
-  personagem = new Personagem(x, y, 46 * 2, 68 * 2, animacoes);
+  personagem = new Personagem(
+    x, y, 46 * 2, 68 * 2, animacoes
+  );
 
- //portaY = height - 40 - 240;
- porta = new Porta(portaX, portaY, 140, 170, imgPorta);
+  // Mapeamento da nova porta: 6 quadros horizontais
+  const quantidadeFramesPorta = 6;
+  const larguraQuadroPorta =
+    imgPorta.width / quantidadeFramesPorta;
 
+  const mapeamentoPorta = {
+    escala: 1.45,
+
+    frames: Array.from(
+      { length: quantidadeFramesPorta },
+      (_, i) => ({
+        x: i * larguraQuadroPorta,
+        y: 0,
+      })
+    ),
+
+    frameWidth: larguraQuadroPorta,
+    frameHeight: imgPorta.height,
+  };
+
+  const larguraPorta =
+    mapeamentoPorta.frameWidth * mapeamentoPorta.escala;
+
+  const alturaPorta =
+    mapeamentoPorta.frameHeight * mapeamentoPorta.escala;
+
+  portaX = larguraCenario - larguraPorta - 20;
+  portaY = height - 40 - alturaPorta;
+
+  porta = new Porta(
+    portaX,
+    portaY,
+    larguraPorta,
+    alturaPorta,
+    imgPorta,
+    mapeamentoPorta
+  );
+
+  // Imagens das plataformas
   imgPlataformas = {
     madeira: await loadImage("assets/plataforma-madeira.png"),
     pedra: await loadImage("assets/plataforma-pedra.png"),
     terra: await loadImage("assets/plataforma-terra.png"),
   };
 
-  plataformas.push(new Plataforma(0, height - 40, 40, 40, 54, imgPlataformas.terra));
+  plataformas.push(
+    new Plataforma(
+      0, height - 40, 40, 40, 54,
+      imgPlataformas.terra
+    )
+  );
 
+  // Itens coletáveis
   itens.push(
     new Item(width + 45, height - 250, 40, 40, imgCoracao)
   );
+
   itens.push(
     new Item(100, height - 140, 40, 40, imgCoracao)
   );
+
   itens.push(
     new Item(150, height - 140, 40, 40, imgCoracao)
   );
+
   itens.push(
     new Item(200, height - 140, 40, 40, imgCoracao)
   );
-} // Fecha a função setup corretamente.
+}
 
 function draw() {
-  if (executando === true) {
+  if (executando) {
     desenharJogo();
 
-  porta.atualizar(personagem);
-  porta.desenhar();
-  personagem.desenhar();
-
+    // Atualiza a animação uma vez por quadro
+    porta.atualizar(personagem);
   } else {
     desenharGameOver();
   }
 }
 
 function desenharGameOver() {
-  image(imgCenario["fase" + faseAtual], 0, 0, width, height);
+  image(
+    imgCenario["fase" + faseAtual],
+    0, 0, width, height
+  );
 
   fill("red");
   textSize(90);
@@ -162,6 +214,7 @@ function desenharPontuacao() {
   fill("#ffffff83");
   noStroke();
   rect(40, 40, 150, 60);
+
   image(imgCoracao, 50, 50);
 
   fill("black");
@@ -181,9 +234,7 @@ function desenharJogo() {
     } else if (cenarioX < 0 && personagem.x <= centroTela) {
       cenarioX += velocidade;
 
-      if (cenarioX > 0) {
-        cenarioX = 0;
-      }
+      if (cenarioX > 0) cenarioX = 0;
 
       for (let p of plataformas) {
         p.moverDireita();
@@ -226,22 +277,25 @@ function desenharJogo() {
     personagem.parar();
   }
 
-  if (cenarioX > 0) {
-    cenarioX = 0;
-  }
+  if (cenarioX > 0) cenarioX = 0;
 
   if (cenarioX < width - larguraCenario) {
     cenarioX = width - larguraCenario;
   }
 
-  image(imgCenario["fase" + faseAtual], cenarioX, 0, larguraCenario, height);
-  desenharPontuacao();
+  image(
+    imgCenario["fase" + faseAtual],
+    cenarioX, 0, larguraCenario, height
+  );
+
+  // Atualiza a física do personagem
   personagem.aplicarGravidade();
 
   if (personagem.y > height) {
     executando = false;
   }
 
+  // Coleta de itens
   for (let i = 0; i < itens.length; i++) {
     if (personagem.checarColisao(itens[i])) {
       itens.splice(i, 1);
@@ -250,6 +304,7 @@ function desenharJogo() {
     }
   }
 
+  // Colisões com as plataformas
   for (let plataforma of plataformas) {
     if (personagem.checarColisao(plataforma) === 1) {
       personagem.pisarNoChao(plataforma);
@@ -258,17 +313,24 @@ function desenharJogo() {
     }
   }
 
-for (let p of plataformas) {
-  p.desenhar();
-}
+  // Desenha as plataformas
+  for (let p of plataformas) {
+    p.desenhar();
+  }
 
-for (let item of itens) {
-  item.desenhar();
-}
+  // Desenha os itens
+  for (let item of itens) {
+    item.desenhar();
+  }
 
-porta.desenhar();
+  // Desenha a porta uma única vez
+  porta.desenhar();
 
-personagem.desenhar();
+  // Desenha o personagem por cima dos elementos do cenário
+  personagem.desenhar();
+
+  // Desenha a pontuação por último
+  desenharPontuacao();
 }
 
 function keyPressed() {
