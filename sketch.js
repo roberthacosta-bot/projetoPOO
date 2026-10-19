@@ -52,47 +52,47 @@ async function setup() {
 
 mapeamento = {
 
-run: {
-  escala: 1.45,
+idle: {
   frames: [
-    { x: 0, y: 0 },
-    { x: 109, y: 0 },
-    { x: 218, y: 0 },
-    { x: 326, y: 0 },
-    { x: 435, y: 0 },
-    { x: 544, y: 0 },
-    { x: 652, y: 0 },
-    { x: 761, y: 0 },
+    { x: 0, y: 22 },
+    { x: 216, y: 10 },
+    { x: 436, y: 16 },
+    { x: 655, y: 27 },
+    { x: 871, y: 28 },
+    { x: 1098, y: 30 },
+    { x: 1321, y: 35 },
   ],
-  frameWidth: 109,
-  frameHeight: 122,
+  frameWidth: 216,
+  frameHeight: 214,
 },
 
 jump: {
-  escala: 1.45,
   frames: [
-    { x: 0,    y: 0 }, // 1. Preparação
-    { x: 362,  y: 0 }, // 2. Impulso
-    { x: 724,  y: 0 }, // 3. Subida
-    { x: 1086, y: 0 }, // 4. Ápice
-    { x: 1448, y: 0 }, // 5. Descida
-    { x: 1810, y: 0 }  // 6. Aterrissagem
+    { x: 0,    y: 62 }, 
+    { x: 222,  y: 33 }, 
+    { x: 451,  y: 0 }, 
+    { x: 672, y: 0 }, 
+    { x: 885, y: 33 }, 
+    { x: 1105, y: 56 }, 
+    { x: 1329, y: 61 }, 
+
   ],
-  frameWidth: 362,
-  frameHeight: 724,
+  frameWidth: 192,
+  frameHeight: 183,
 },
 
-  idle: {
-    escala: 1,
+  run: {
     frames: [
-      { x: 0, y: 0 },
-      { x: 200.2, y: 0 },
-      { x: 400.4, y: 0 },
-      { x: 600.6, y: 0 },
-      { x: 800.8, y: 0 },
+      { x: 0, y: 29 },
+      { x: 216, y: 25 },
+      { x: 440, y: 26 },
+      { x: 661, y: 26 },
+      { x: 878, y: 27 },
+      { x: 1095, y: 26 }, 
+      { x: 1308, y: 25 }, 
     ],
-    frameWidth: 200.2,
-    frameHeight: 249,
+    frameWidth: 192,
+    frameHeight: 186,
   },
 };
 
@@ -234,7 +234,7 @@ function desenharJogo() {
     cenarioX = width - larguraCenario;
   }
 
-image(imgCenario["fase" + faseAtual], cenarioX, 0, larguraCenario, height);
+  image(imgCenario["fase" + faseAtual], cenarioX, 0, larguraCenario, height);
   desenharPontuacao();
   personagem.aplicarGravidade();
 
@@ -276,4 +276,3 @@ function keyPressed() {
     personagem.pular();
   }
 }
-
