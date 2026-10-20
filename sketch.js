@@ -112,7 +112,7 @@ async function setup() {
 
   porta = new Porta(1600, 315, 154, 248, imgPorta);
 
-  personagem = new Personagem(x, y, 46 * 2, 68 * 2, animacoes);
+  personagem = new Personagem(0, y, 46 * 2, 68 * 2, animacoes);
 
   
 
@@ -123,23 +123,20 @@ async function setup() {
     Terra: await loadImage("assets/plataformaTerra.png"),
   };
 
-  plataformas.push(new Plataforma(0, height - 40, 40, 40, 54, imgPlataformas.terra));
+  plataformas.push(new Plataforma(0, height - 70, 130, 150, 1, imgPlataformas.Terra));
   plataformas.push(new Plataforma(570, height - 348, 130, 130, 1, imgPlataformas.Terra ));
   plataformas.push(new Plataforma(670, height - 448, 130, 130, 1, imgPlataformas.Terra ));
-  plataformas.push(new Plataforma(970, height - 280, 130, 130, 1, imgPlataformas.Terra ));
-  plataformas.push(new Plataforma(670, height - 148, 130, 130, 1, imgPlataformas.Terra ));
+  plataformas.push(new Plataforma(1000, height - 280, 130, 130, 1, imgPlataformas.Terra ));
   plataformas.push(new Plataforma(370, height - 248, 130, 130, 1, imgPlataformas.Terra ));
+  plataformas.push(new Plataforma(1600, 565, 130, 130, 1, imgPlataformas.Terra ));
+  plataformas.push(new Plataforma(1300, height - 148, 130, 130, 1, imgPlataformas.Terra ));
 
   itens.push(
-    new Item(width + 45, height - 250, 40, 40, imgCoracao)
+    new Item(725, height - 488, 40, 40, imgCoracao)
   );
 
   itens.push(
-    new Item(100, height - 140, 40, 40, imgCoracao)
-  );
-
-  itens.push(
-    new Item(150, height - 140, 40, 40, imgCoracao)
+    new Item(1025, height - 316, 40, 40, imgCoracao)
   );
 
   itens.push(
@@ -253,7 +250,6 @@ function desenharJogo() {
     executando = false;
   }
 
-  // Coleta de itens
   for (let i = 0; i < itens.length; i++) {
     if (personagem.checarColisao(itens[i])) {
       itens.splice(i, 1);
