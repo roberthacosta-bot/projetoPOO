@@ -1,4 +1,3 @@
-
 let img;
 let imgCenario;
 let x, y;
@@ -55,7 +54,6 @@ async function setup() {
   g = 0.8;
   largura = 100;
 
-  // Mapeamento do personagem
   mapeamento = {
     idle: {
       frames: [
@@ -112,63 +110,26 @@ async function setup() {
     idle: new Animacao(mapeamento.idle, imgPersonagem.idle),
   };
 
-  personagem = new Personagem(
-    x, y, 46 * 2, 68 * 2, animacoes
-  );
+  porta = new Porta(1600, 315, 154, 248, imgPorta);
 
-  // Mapeamento da nova porta: 6 quadros horizontais
-  const quantidadeFramesPorta = 6;
-  const larguraQuadroPorta =
-    imgPorta.width / quantidadeFramesPorta;
+  personagem = new Personagem(x, y, 46 * 2, 68 * 2, animacoes);
 
-  const mapeamentoPorta = {
-    escala: 1.45,
+  
 
-    frames: Array.from(
-      { length: quantidadeFramesPorta },
-      (_, i) => ({
-        x: i * larguraQuadroPorta,
-        y: 0,
-      })
-    ),
-
-    frameWidth: larguraQuadroPorta,
-    frameHeight: imgPorta.height,
-  };
-
-  const larguraPorta =
-    mapeamentoPorta.frameWidth * mapeamentoPorta.escala;
-
-  const alturaPorta =
-    mapeamentoPorta.frameHeight * mapeamentoPorta.escala;
-
-  portaX = larguraCenario - larguraPorta - 20;
-  portaY = height - 40 - alturaPorta;
-
-  porta = new Porta(
-    portaX,
-    portaY,
-    larguraPorta,
-    alturaPorta,
-    imgPorta,
-    mapeamentoPorta
-  );
-
-  // Imagens das plataformas
   imgPlataformas = {
     madeira: await loadImage("assets/plataforma-madeira.png"),
     pedra: await loadImage("assets/plataforma-pedra.png"),
     terra: await loadImage("assets/plataforma-terra.png"),
+    Terra: await loadImage("assets/plataformaTerra.png"),
   };
 
-  plataformas.push(
-    new Plataforma(
-      0, height - 40, 40, 40, 54,
-      imgPlataformas.terra
-    )
-  );
+  plataformas.push(new Plataforma(0, height - 40, 40, 40, 54, imgPlataformas.terra));
+  plataformas.push(new Plataforma(570, height - 348, 130, 130, 1, imgPlataformas.Terra ));
+  plataformas.push(new Plataforma(670, height - 448, 130, 130, 1, imgPlataformas.Terra ));
+  plataformas.push(new Plataforma(970, height - 280, 130, 130, 1, imgPlataformas.Terra ));
+  plataformas.push(new Plataforma(670, height - 148, 130, 130, 1, imgPlataformas.Terra ));
+  plataformas.push(new Plataforma(370, height - 248, 130, 130, 1, imgPlataformas.Terra ));
 
-  // Itens coletáveis
   itens.push(
     new Item(width + 45, height - 250, 40, 40, imgCoracao)
   );
@@ -190,8 +151,6 @@ function draw() {
   if (executando) {
     desenharJogo();
 
-    // Atualiza a animação uma vez por quadro
-    porta.atualizar(personagem);
   } else {
     desenharGameOver();
   }
@@ -288,7 +247,6 @@ function desenharJogo() {
     cenarioX, 0, larguraCenario, height
   );
 
-  // Atualiza a física do personagem
   personagem.aplicarGravidade();
 
   if (personagem.y > height) {
@@ -304,7 +262,6 @@ function desenharJogo() {
     }
   }
 
-  // Colisões com as plataformas
   for (let plataforma of plataformas) {
     if (personagem.checarColisao(plataforma) === 1) {
       personagem.pisarNoChao(plataforma);
@@ -313,23 +270,16 @@ function desenharJogo() {
     }
   }
 
-  // Desenha as plataformas
   for (let p of plataformas) {
     p.desenhar();
   }
 
-  // Desenha os itens
   for (let item of itens) {
     item.desenhar();
   }
 
-  // Desenha a porta uma única vez
-  porta.desenhar();
-
-  // Desenha o personagem por cima dos elementos do cenário
+   porta.desenhar();
   personagem.desenhar();
-
-  // Desenha a pontuação por último
   desenharPontuacao();
 }
 

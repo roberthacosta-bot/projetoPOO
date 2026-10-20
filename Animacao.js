@@ -9,7 +9,7 @@ class Animacao {
   }
 
   avancarFrame() {
-    // Não troca de quadro quando a animação está congelada.
+  
     if (this.congelada) return;
 
     let atual = millis();
