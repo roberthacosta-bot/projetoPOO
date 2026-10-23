@@ -73,13 +73,18 @@ parar() {
     this.vy = 0;
   }
 
-  pular() {
-    if (this.noChao) {
-      this.vy = -20;
-      this.animacao = this.animacoes.jump;
-      this.noChao = false;
+pular() {
+  if (this.noChao) {
+    this.vy = -20;
+    this.animacao = this.animacoes.jump;
+    this.noChao = false;
+
+    if (somPulo && typeof somPulo.play === "function") {
+      userStartAudio();
+      somPulo.play();
     }
   }
+}
 
   desenhar() {
     this.animacao.desenhar(

@@ -19,6 +19,8 @@ let velocidade = 5;
 let alturaCenario, larguraCenario = 2146;
 let centroTela = 400;
 let animacoes;
+let somPulo, somGameOver;
+let gameOverTocado = false;
 let imgPorta, porta;
 let portaX, portaY;
 let faseAtual = 1;
@@ -31,6 +33,8 @@ async function setup() {
   img = await loadImage("assets/flora.png");
   imgCoracao = await loadImage("assets/coracao.png");
   imgPorta = await loadImage("assets/porta.png");
+  somPulo = await loadSound("assets/pulo.mp3")
+  somGameOver = await loadSound("assets/gameover.mp3")
 
   imgCenario = {
     fase1: await loadImage("assets/fase1.png"),
@@ -114,8 +118,6 @@ async function setup() {
 
   personagem = new Personagem(0, y, 46 * 2, 68 * 2, animacoes);
 
-  
-
   imgPlataformas = {
     madeira: await loadImage("assets/plataforma-madeira.png"),
     pedra: await loadImage("assets/plataforma-pedra.png"),
@@ -144,6 +146,7 @@ async function setup() {
   );
 }
 
+
 function draw() {
   if (executando) {
     desenharJogo();
@@ -154,11 +157,8 @@ function draw() {
 }
 
 function desenharGameOver() {
-  image(
-    imgCenario["fase" + faseAtual],
-    0, 0, width, height
-  );
-
+  image(imgCenario["fase" + faseAtual],0, 0, width, height);
+  imgCenario["fase" + faseAtual].filter(GRAY);
   fill("red");
   textSize(90);
   textFont(font);
@@ -248,7 +248,12 @@ function desenharJogo() {
 
   if (personagem.y > height) {
     executando = false;
+
+  if(!gameOverTocado){
+    somGameOver.play();
+    gameOverTocado = true;
   }
+}
 
   for (let i = 0; i < itens.length; i++) {
     if (personagem.checarColisao(itens[i])) {
@@ -274,10 +279,11 @@ function desenharJogo() {
     item.desenhar();
   }
 
-   porta.desenhar();
+  porta.desenhar();
   personagem.desenhar();
   desenharPontuacao();
-}
+
+  }
 
 function keyPressed() {
   if (keyCode === UP_ARROW || key === " ") {
