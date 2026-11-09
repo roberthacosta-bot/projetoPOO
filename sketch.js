@@ -1,8 +1,5 @@
-let img;
-let imgCenario;
-let x, y;
-let vx, vy;
-let g;
+let img, imgCenario;
+let x, y, vx, vy, g;
 let largura;
 let personagem;
 let plataformas = [];
