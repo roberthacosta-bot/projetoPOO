@@ -11,7 +11,7 @@ let imgPersonagem;
 let font;
 let executando = true;
 let itens = [];
-let imgCoracao;
+let imgPocao;
 let pontos = 0;
 let mapeamento;
 let cenarioX = 0;
@@ -31,7 +31,7 @@ async function setup() {
   font = await loadFont("assets/Silkscreen-Regular.ttf");
 
   img = await loadImage("assets/flora.png");
-  imgCoracao = await loadImage("assets/coracao.png");
+  imgPocao = await loadImage("assets/pocao.png");
   imgPorta = await loadImage("assets/porta.png");
   somPulo = await loadSound("assets/pulo.mp3")
   somGameOver = await loadSound("assets/gameover.mp3")
@@ -134,18 +134,17 @@ async function setup() {
   plataformas.push(new Plataforma(1300, height - 148, 130, 130, 1, imgPlataformas.Terra ));
 
   itens.push(
-    new Item(725, height - 488, 40, 40, imgCoracao)
+    new Item(725, height - 488, 50, 50, imgPocao)
   );
 
   itens.push(
-    new Item(1025, height - 316, 40, 40, imgCoracao)
+    new Item(1025, height - 316, 50, 50, imgPocao)
   );
 
   itens.push(
-    new Item(200, height - 140, 40, 40, imgCoracao)
+    new Item(200, height - 140, 50, 50, imgPocao)
   );
 }
-
 
 function draw() {
   if (executando) {
@@ -171,7 +170,7 @@ function desenharPontuacao() {
   noStroke();
   rect(40, 40, 150, 60);
 
-  image(imgCoracao, 50, 50);
+  image(imgPocao, 50, 50);
 
   fill("black");
   textSize(30);
