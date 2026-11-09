@@ -289,6 +289,10 @@ function desenharJogo() {
 
 function keyPressed() {
   if (keyCode === UP_ARROW || key === " ") {
-    personagem.pular();
+    if (porta.verificarColisao(personagem)) {
+      print("esta colidindo")
+    } else {
+      personagem.pular();
+    }
   }
 }
