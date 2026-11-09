@@ -24,6 +24,8 @@ let gameOverTocado = false;
 let imgPorta, porta;
 let portaX, portaY;
 let faseAtual = 1;
+let fase1;
+let estaFase;
 
 async function setup() {
   createCanvas(800, 600);
@@ -36,6 +38,9 @@ async function setup() {
   somPulo = await loadSound("assets/pulo.mp3")
   somGameOver = await loadSound("assets/gameover.mp3")
 
+  fase1 = await loadJSON("fases/fase1.json");
+
+
   imgCenario = {
     fase1: await loadImage("assets/fase1.png"),
     fase2: await loadImage("assets/fase2.png"),
@@ -43,6 +48,14 @@ async function setup() {
     fase4: await loadImage("assets/fase4.png"),
     fase5: await loadImage("assets/fase5.png"),
   };
+
+  imgPlataformas = {
+    madeira: await loadImage("assets/plataforma-madeira.png"),
+    pedra: await loadImage("assets/plataforma-pedra.png"),
+    terra: await loadImage("assets/plataforma-terra.png"),
+    Terra: await loadImage("assets/plataformaTerra.png"),
+  };
+
 
   alturaCenario = height;
 
@@ -118,32 +131,25 @@ async function setup() {
 
   personagem = new Personagem(0, y, 46 * 2, 68 * 2, animacoes);
 
-  imgPlataformas = {
-    madeira: await loadImage("assets/plataforma-madeira.png"),
-    pedra: await loadImage("assets/plataforma-pedra.png"),
-    terra: await loadImage("assets/plataforma-terra.png"),
-    Terra: await loadImage("assets/plataformaTerra.png"),
-  };
+  estaFase = montarFase(imgCenario.fase1, fase1);
 
-  plataformas.push(new Plataforma(0, height - 70, 130, 150, 1, imgPlataformas.Terra));
-  plataformas.push(new Plataforma(570, height - 348, 130, 130, 1, imgPlataformas.Terra ));
-  plataformas.push(new Plataforma(670, height - 448, 130, 130, 1, imgPlataformas.Terra ));
-  plataformas.push(new Plataforma(1000, height - 280, 130, 130, 1, imgPlataformas.Terra ));
-  plataformas.push(new Plataforma(370, height - 248, 130, 130, 1, imgPlataformas.Terra ));
-  plataformas.push(new Plataforma(1600, 565, 130, 130, 1, imgPlataformas.Terra ));
-  plataformas.push(new Plataforma(1300, height - 148, 130, 130, 1, imgPlataformas.Terra ));
+}
+function montarFase(cenario, jsonFase) {
+  let objFase1 = new Fase(cenario)
 
-  itens.push(
-    new Item(725, height - 488, 50, 50, imgPocao)
-  );
+  for (let p of jsonFase.plataformas) {
+    objFase1.plataformas.push(
+      new Plataforma(p.x, p.y, p.largura, p.altura, p.n, imgPlataformas[p.tipo]),
+    );
+  }
 
-  itens.push(
-    new Item(1025, height - 316, 50, 50, imgPocao)
-  );
+  for (let i of jsonFase.itens) {
+    objFase1.itens.push(
+      new Item(i.x, i.y, i.largura, i.altura, imgPocao),
+    );
+  }
 
-  itens.push(
-    new Item(200, height - 140, 50, 50, imgPocao)
-  );
+  return objFase1
 }
 
 function draw() {
@@ -191,11 +197,11 @@ function desenharJogo() {
 
       if (cenarioX > 0) cenarioX = 0;
 
-      for (let p of plataformas) {
+      for (let p of estaFase.plataformas) {
         p.moverDireita();
       }
 
-      for (let item of itens) {
+      for (let item of estaFase.itens) {
         item.moverDireita();
       }
 
@@ -216,11 +222,11 @@ function desenharJogo() {
         cenarioX = width - larguraCenario;
       }
 
-      for (let p of plataformas) {
+      for (let p of estaFase.plataformas) {
         p.moverEsquerda();
       }
 
-      for (let item of itens) {
+      for (let item of estaFase.itens) {
         item.moverEsquerda();
       }
 
@@ -254,15 +260,15 @@ function desenharJogo() {
   }
 }
 
-  for (let i = 0; i < itens.length; i++) {
-    if (personagem.checarColisao(itens[i])) {
-      itens.splice(i, 1);
+  for (let i = 0; i < estaFase.itens.length; i++) {
+    if (personagem.checarColisao(estaFase.itens[i])) {
+      estaFase.itens.splice(i, 1);
       pontos++;
       i--;
     }
   }
 
-  for (let plataforma of plataformas) {
+  for (let plataforma of estaFase.plataformas) {
     if (personagem.checarColisao(plataforma) === 1) {
       personagem.pisarNoChao(plataforma);
     } else if (personagem.checarColisao(plataforma) === 2) {
@@ -270,11 +276,11 @@ function desenharJogo() {
     }
   }
 
-  for (let p of plataformas) {
+  for (let p of estaFase.plataformas) {
     p.desenhar();
   }
 
-  for (let item of itens) {
+  for (let item of estaFase.itens) {
     item.desenhar();
   }
 

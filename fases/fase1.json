@@ -62,6 +62,31 @@
         "n": 1,
         "tipo": "Terra"
     }
-]
+    ],
   
+    "itens" : [
+        {
+        "x": 725,
+        "y": 112,
+        "largura": 50,
+        "altura": 50,
+        "tipo": "Pocao"
+        },
+
+        {
+        "x": 1025,
+        "y": 284,
+        "largura": 50,
+        "altura": 50,
+        "tipo": "Pocao"
+        },
+
+        {
+        "x": 200,
+        "y": 460,
+        "largura": 50,
+        "altura": 50,
+        "tipo": "Pocao"
+        }
+    ]
 }
