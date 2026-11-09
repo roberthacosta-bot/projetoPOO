@@ -1,5 +1,4 @@
-let img;
-let imgCenario;
+let img, imgCenario;
 let x, y;
 let vx, vy;
 let g;
