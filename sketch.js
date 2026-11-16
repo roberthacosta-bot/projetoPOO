@@ -46,10 +46,21 @@ async function setup() {
   };
 
   imgPlataformas = {
-    madeira: await loadImage("itens/plataforma-madeira.png"),
-    pedra: await loadImage("itens/plataforma-pedra.png"),
-    terra: await loadImage("itens/plataforma-terra.png"),
-    Terra: await loadImage("itens/plataformaTerra.png"),
+    Terra: await loadImage("itens/plataforma14.png"),
+    P1:await loadImage("itens/plataforma1.png"),
+    P2:await loadImage("itens/plataforma2.png"),
+    P3:await loadImage("itens/plataforma3.png"),
+    P4:await loadImage("itens/plataforma4.png"),
+    P5:await loadImage("itens/plataforma5.png"),
+    P6:await loadImage("itens/plataforma6.png"),
+    P7:await loadImage("itens/plataforma7.png"),
+    P8:await loadImage("itens/plataforma8.png"),
+    P9:await loadImage("itens/plataforma9.png"),
+    P10:await loadImage("itens/plataforma10.png"),
+    P11:await loadImage("itens/plataforma11.png"),
+    P12:await loadImage("itens/plataforma12.png"),
+    P13:await loadImage("itens/plataforma13.png"),
+    P14:await loadImage("itens/plataforma14.png"),
   };
 
 

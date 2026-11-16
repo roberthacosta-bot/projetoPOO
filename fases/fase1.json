@@ -2,11 +2,11 @@
     "plataformas": [
     {
         "x": 0,
-        "y": 530,
+        "y": 500,
         "largura": 130,
         "altura": 150,
         "n": 1,
-        "tipo": "Terra"
+        "tipo": "P10"
     },
 
     {
@@ -15,16 +15,16 @@
         "largura":130,
         "altura": 130,
         "n": 1,
-        "tipo": "Terra"
+        "tipo": "P10"
     },
 
     {
         "x": 670,
         "y": 152,
-        "largura": 130,
-        "altura": 130,
+        "largura": 200,
+        "altura": 150,
         "n": 1,
-        "tipo": "Terra"
+        "tipo": "P1"
     },
 
     {
@@ -33,7 +33,7 @@
         "largura": 130,
         "altura": 130,
         "n": 1,
-        "tipo": "Terra"
+        "tipo": "P10"
     },
 
     {
@@ -42,7 +42,7 @@
         "largura": 130,
         "altura": 130,
         "n": 1,
-        "tipo": "Terra"
+        "tipo": "P10"
     },
 
     {
@@ -51,7 +51,7 @@
         "largura": 130,
         "altura": 130,
         "n": 1,
-        "tipo": "Terra"
+        "tipo": "P10"
     },
 
     {
@@ -60,7 +60,7 @@
         "largura": 130,
         "altura": 130,
         "n": 1,
-        "tipo": "Terra"
+        "tipo": "P10"
     }
     ],
   
