@@ -21,7 +21,7 @@ let gameOverTocado = false;
 let imgPorta, porta;
 let portaX, portaY;
 let faseAtual = 1;
-let fase1;
+let fase1, faseR;
 let estaFase;
 
 async function setup() {
