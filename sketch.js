@@ -29,28 +29,27 @@ async function setup() {
 
   font = await loadFont("assets/Silkscreen-Regular.ttf");
 
-  img = await loadImage("assets/flora.png");
-  imgPocao = await loadImage("assets/pocao.png");
-  imgPorta = await loadImage("assets/porta.png");
+  img = await loadImage("personagens/flora.png");
+  imgPocao = await loadImage("itens/pocao.png");
+  imgPorta = await loadImage("itens/porta.png");
   somPulo = await loadSound("assets/pulo.mp3")
   somGameOver = await loadSound("assets/gameover.mp3")
 
   fase1 = await loadJSON("fases/fase1.json");
 
-
   imgCenario = {
-    fase1: await loadImage("assets/fase1.png"),
-    fase2: await loadImage("assets/fase2.png"),
-    fase3: await loadImage("assets/fase3.png"),
-    fase4: await loadImage("assets/fase4.png"),
-    fase5: await loadImage("assets/fase5.png"),
+    fase1: await loadImage("fases/fase1.png"),
+    fase2: await loadImage("fases/fase2.png"),
+    fase3: await loadImage("fases/fase3.png"),
+    fase4: await loadImage("fases/fase4.png"),
+    fase5: await loadImage("fases/fase5.png"),
   };
 
   imgPlataformas = {
-    madeira: await loadImage("assets/plataforma-madeira.png"),
-    pedra: await loadImage("assets/plataforma-pedra.png"),
-    terra: await loadImage("assets/plataforma-terra.png"),
-    Terra: await loadImage("assets/plataformaTerra.png"),
+    madeira: await loadImage("itens/plataforma-madeira.png"),
+    pedra: await loadImage("itens/plataforma-pedra.png"),
+    terra: await loadImage("itens/plataforma-terra.png"),
+    Terra: await loadImage("itens/plataformaTerra.png"),
   };
 
 
@@ -113,9 +112,9 @@ async function setup() {
   };
 
   imgPersonagem = {
-    run: await loadImage("assets/run.png"),
-    jump: await loadImage("assets/jump.png"),
-    idle: await loadImage("assets/idle.png"),
+    run: await loadImage("personagens/run.png"),
+    jump: await loadImage("personagens/jump.png"),
+    idle: await loadImage("personagens/idle.png"),
   };
 
   animacoes = {
