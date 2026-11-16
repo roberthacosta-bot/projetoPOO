@@ -120,6 +120,19 @@ async function setup() {
       frameWidth: 199,
       frameHeight: 200,
     },
+
+    onca: {
+      frames: [
+        {x: 0, y: 0},
+        {x: 362, y: 0},
+        {x: 724, y: 0},
+        {x: 1086, y: 0},
+        {x: 1448, y: 0},
+        {x: 1810, y: 0},
+      ],
+      frameWidth: 362,
+      frameHeight: 724,
+    },
   };
 
   imgPersonagem = {
