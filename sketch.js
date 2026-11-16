@@ -46,7 +46,6 @@ async function setup() {
   };
 
   imgPlataformas = {
-    Terra: await loadImage("itens/plataforma14.png"),
     P1:await loadImage("itens/plataforma1.png"),
     P2:await loadImage("itens/plataforma2.png"),
     P3:await loadImage("itens/plataforma3.png"),
@@ -56,11 +55,6 @@ async function setup() {
     P7:await loadImage("itens/plataforma7.png"),
     P8:await loadImage("itens/plataforma8.png"),
     P9:await loadImage("itens/plataforma9.png"),
-    P10:await loadImage("itens/plataforma10.png"),
-    P11:await loadImage("itens/plataforma11.png"),
-    P12:await loadImage("itens/plataforma12.png"),
-    P13:await loadImage("itens/plataforma13.png"),
-    P14:await loadImage("itens/plataforma14.png"),
   };
 
 
