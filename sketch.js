@@ -1,7 +1,7 @@
 let img, imgCenario;
 let x, y, vx, vy, g;
 let largura;
-let personagem;
+let personagem, onca;
 let plataformas = [];
 let imgPlataformas;
 let imgPersonagem;
@@ -135,7 +135,9 @@ async function setup() {
     run: await loadImage("personagens/run.png"),
     jump: await loadImage("personagens/jump.png"),
     idle: await loadImage("personagens/idle.png"),
+    
   };
+onca = await loadImage("personagens/onca_pintada.png"),
 
   animacoes = {
     run: new Animacao(mapeamento.run, imgPersonagem.run),
@@ -145,7 +147,9 @@ async function setup() {
 
   porta = new Porta(1600, 315, 154, 248, imgPorta);
 
-  personagem = new Personagem(0, y, 46 * 2, 68 * 2, animacoes);
+  personagem = new Personagem(0, 0, 46 * 2, 68 * 2, animacoes);
+
+  onca = new Personagem(930, 260, 362, 724 , onca);
 
   estaFase = montarFase(imgCenario.fase1, fase1);
 

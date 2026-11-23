@@ -2,7 +2,7 @@
     "plataformas": [
     {
         "x": 0,
-        "y": 500,
+        "y": 465,
         "largura": 200,
         "altura": 200,
         "n": 1,
@@ -11,26 +11,26 @@
 
     {
         "x": 490,
-        "y": 450,
+        "y": 250,
         "largura":130,
         "altura": 130,
         "n": 1,
-        "tipo": "P2"
+        "tipo": "P4"
     },
 
     {
-        "x": 670,
-        "y": 152,
+        "x": 700,
+        "y": 450,
         "largura": 200,
         "altura": 150,
         "n": 1,
-        "tipo": "P1"
+        "tipo": "P6"
     },
 
     {
-        "x": 1000,
-        "y": 320,
-        "largura": 150,
+        "x": 930,
+        "y": 260,
+        "largura": 200,
         "altura": 100,
         "n": 1,
         "tipo": "P9"
@@ -42,7 +42,7 @@
         "largura": 130,
         "altura": 130,
         "n": 1,
-        "tipo": "P1"
+        "tipo": "P2"
     },
 
     {
