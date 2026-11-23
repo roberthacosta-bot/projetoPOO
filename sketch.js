@@ -55,6 +55,8 @@ async function setup() {
     P7:await loadImage("itens/plataforma7.png"),
     P8:await loadImage("itens/plataforma8.png"),
     P9:await loadImage("itens/plataforma9.png"),
+    P10:await loadImage("itens/plataforma10.png"),
+    
   };
 
 
