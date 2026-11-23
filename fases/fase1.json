@@ -88,5 +88,15 @@
         "altura": 50,
         "tipo": "Pocao"
         }
+    ],
+
+    "inimigos" : [
+        {
+        "x": 930,
+        "y": 230,
+        "largura": 362,
+        "altura": 724,
+        "tipo": "onca"
+        }
     ]
 }
