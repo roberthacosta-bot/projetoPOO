@@ -149,7 +149,7 @@ onca = await loadImage("personagens/onca_pintada.png"),
 
   personagem = new Personagem(0, 0, 46 * 2, 68 * 2, animacoes);
 
-  onca = new Personagem(930, 260, 362, 724 , onca);
+  onca = new Personagem(930, 230, 362, 724 , onca);
 
   estaFase = montarFase(imgCenario.fase1, fase1);
 
